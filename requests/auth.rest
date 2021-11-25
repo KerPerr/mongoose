@@ -1,0 +1,17 @@
+POST http://localhost:5000/register
+Content-Type: application/json
+
+{
+    "email": "author@bd",
+    "pseudo": "bd",
+    "password": "author",
+    "role": "AUTHOR"
+}
+###
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+    "pseudo": "author",
+    "password": "author"
+}
