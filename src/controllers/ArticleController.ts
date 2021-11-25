@@ -29,10 +29,10 @@ export class ArticleController {
 
         try {
             if (id) {
-                const article = await Article.findById(id).populate('author')
+                const article = await Article.findById(id)
                 res.send(article)
             } else {
-                const articles = await Article.find(req.query).populate('author')
+                const articles = await Article.find(req.query)
                 res.send(articles)
             }
         } catch (e) {
