@@ -3,9 +3,10 @@ import { User } from "../entity/User"
 
 export const checkRole = (roles: string[]) => {
     return async (req: Request, res: Response, next: NextFunction) => {
-        const payload = res.locals.payload
+        const { me } = res.locals.payload
+        
         try {
-            const user = await User.findById(payload.id)
+            const user = await User.findById(me)
             if (roles.indexOf(user.role) > -1) next();
             else res.status(401).send({ message: `Permission not granted` })
         } catch (error) {

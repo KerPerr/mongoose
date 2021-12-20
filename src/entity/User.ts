@@ -13,17 +13,12 @@ const UserSchema = new Schema({
             message: (props: any) => `${props.value} is not a valid email`
         }
     },
-    pseudo: { type: String, required: [true, 'Pseudo is required'], unique: true },
+    lastName: { type: String, required: true },
+    firstName: { type: String, required: true },
+    username: { type: String, required: [true, 'Pseudo is required'], unique: true },
     password: { type: String, required: true },
-    role: {
-        type: String,
-        default: 'USER',
-        enum: {
-            values: ['USER', 'AUTHOR', 'ADMIN'],
-            message: '{VALUE} is not allowed'
-        }
-    },
-    articles: [{ type: Schema.Types.ObjectId, ref: 'Article' }]
+    friends: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    posts: [{ type:Schema.Types.ObjectId, ref: 'Post'}]
 }, {
     timestamps: true
 });

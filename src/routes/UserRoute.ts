@@ -5,8 +5,7 @@ const router = Router();
 
 router.get('/', UserController.read)
 router.get('/:id', UserController.read)
-
-router.get('/:id/articles', UserController.wrote)
+router.get('/:id/friends', UserController.friendlist)
 
 router.delete('/', UserController.delete)
 router.delete('/:id', UserController.delete)

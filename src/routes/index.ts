@@ -1,14 +1,15 @@
 import { Router } from "express";
+import { checkToken } from "../middlewares/checkToken";
 import AuthRoute from './AuthRoute'
 import UserRoute from './UserRoute'
-import ArticleRoute from './ArticleRoute'
-import { checkToken } from "../middlewares/checkToken";
-import { checkRole } from "../middlewares/checkRole";
+import PostRoute from './PostRoute'
+import RelationRoute from './RelationRoute'
 
 const root = Router()
 
 root.use('/', AuthRoute)
-root.use('/users', [checkToken, checkRole(["ADMIN"])], UserRoute)
-root.use('/articles', [checkToken, checkRole(["ADMIN", "AUTHOR"])], ArticleRoute)
+root.use('/users', [checkToken], UserRoute)
+root.use('/posts', [checkToken], PostRoute)
+root.use('/relations', [checkToken], RelationRoute)
 
 export default root

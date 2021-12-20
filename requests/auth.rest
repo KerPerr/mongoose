@@ -2,16 +2,42 @@ POST http://localhost:5000/register
 Content-Type: application/json
 
 {
-    "email": "author@bd",
-    "pseudo": "bd",
-    "password": "author",
-    "role": "AUTHOR"
+    "email": "c@lebbolo.com",
+    "firstName": "Catherine",
+    "lastName": "Lebbolo",
+    "username": "clebbolo",
+    "password": "ok_hand"
 }
 ###
-POST http://localhost:5000/login
+POST http://localhost:5000/register
 Content-Type: application/json
 
 {
-    "pseudo": "author",
-    "password": "author"
+    "email": "l@castrec.com",
+    "firstName": "Loic",
+    "lastName": "Castrec",
+    "username": "lcastrec",
+    "password": "ok_hand"
+}
+###
+POST http://localhost:5000/register
+Content-Type: application/json
+
+{
+    "email": "y@castrec.com",
+    "firstName": "Yvan",
+    "lastName": "Castrec",
+    "username": "ycastrec",
+    "password": "ok_hand"
+}
+###
+POST http://localhost:5000/register
+Content-Type: application/json
+
+{
+    "email": "r@castrec.com",
+    "firstName": "Ronan",
+    "lastName": "Castrec",
+    "username": "rcastrec",
+    "password": "ok_hand"
 }

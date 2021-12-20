@@ -6,18 +6,19 @@ import jwt from 'jsonwebtoken'
 export class AuthController {
 
     static authenticated = async (req: Request, res: Response) => {
+
         try {
             const cookie = req.cookies['access_token']
             const claims = jwt.verify(cookie, process.env.JWT_SECRET) as any
-
+            
             if (!claims) {
                 return res.status(401).send({ message: `Unauthenticated` })
             }
 
-            const user = await User.findOne(claims.id)
-            res.send(user)
+            const user = await User.findById(claims.me)
+            return res.send(user)
         } catch (e) {
-            res.status(401).send({ message: `Can't find token` })
+            return res.status(401).send({ message: `Can't find token` })
         }
     }
 
@@ -35,9 +36,9 @@ export class AuthController {
     }
 
     static login = async (req: Request, res: Response) => {
-        const { pseudo, password } = req.body
+        const { username, password } = req.body
 
-        const user = await User.findOne({ pseudo })
+        const user = await User.findOne({ username })
 
         if (!user) {
             return res.status(400).send({ message: "Invalid pseudo" })
@@ -53,7 +54,7 @@ export class AuthController {
             const uid = randomUUID();
 
             const token = jwt.sign(
-                { id: user._id, uid },
+                { me: user._id, uid },
                 process.env.JWT_SECRET, {
                 expiresIn: '1d'
             })
@@ -70,6 +71,6 @@ export class AuthController {
 
     static logout = async (req: Request, res: Response) => {
         res.cookie('access_token', '', { maxAge: 0 })
-        res.send({ message: 'success ' })
+        res.send({ message: 'success' })
     }
 }

@@ -1,4 +1,5 @@
 import http from 'http'
+import cors from 'cors'
 import dotenv from 'dotenv'
 import express from 'express';
 import mongoose from 'mongoose'
@@ -22,6 +23,12 @@ class Server {
         // Permet la lecture de body
         this._app.use(express.json())
 
+        this._app.use(cors({
+            origin: 'http://localhost:1234',
+            credentials: true,
+            methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
+        }))
+
         this._app.use('/', root)
     }
 
@@ -30,7 +37,7 @@ class Server {
 
     public async start() {
         this._server = this._app.listen(this._app.get('PORT'))
-        
+
         const OPTIONS = {
             useUnifiedTopology: true,
             useNewUrlParser: true,
@@ -39,7 +46,7 @@ class Server {
             retryWrites: false
         }
         const cnx = await mongoose.connect(process.env.LOCAL, OPTIONS)
-        
+
         console.log(`Connected to ${cnx.connection.host}`)
     }
 }

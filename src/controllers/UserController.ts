@@ -3,29 +3,29 @@ import { User } from "../entity/User";
 
 export class UserController {
 
+    static friendlist(req: Request, res: Response) {
+        
+    }
+
     static read = async (req: Request, res: Response) => {
         const { id } = req.params
+        const { me } = res.locals.payload
 
         try {
             if (id) {
-                const user = await User.findById(id)
-                res.send(user)
+                const user = await User.findById(id).populate('friends')
+                res.send(user.friends)
             } else {
-                const users = await User.find(req.query)
+                const user = await User.findById(me)
+                if(!user) return res.status(401).send([])
+                const arr = [...user.friends, user._id]
+
+                const users = await User.find({
+                    _id: { $nin: arr }
+                })
+
                 res.send(users)
             }
-        } catch (e) {
-            console.log(e)
-            res.status(400).send(e)
-        }
-    }
-
-    static wrote = async (req: Request, res: Response) => {
-        const { id } = req.params
-
-        try {
-            const user = await User.findById(id).populate('articles')
-            res.send(user)
         } catch (e) {
             console.log(e)
             res.status(400).send(e)

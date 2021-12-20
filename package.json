@@ -5,6 +5,7 @@
    "devDependencies": {
       "@types/bcrypt": "^5.0.0",
       "@types/cookie-parser": "^1.4.2",
+      "@types/cors": "^2.8.12",
       "@types/express": "^4.17.13",
       "@types/jsonwebtoken": "^8.5.6",
       "@types/mongoose": "^5.11.97",
@@ -17,6 +18,7 @@
    "dependencies": {
       "bcrypt": "^5.0.1",
       "cookie-parser": "^1.4.6",
+      "cors": "^2.8.5",
       "dotenv": "^10.0.0",
       "express": "^4.17.1",
       "jsonwebtoken": "^8.5.1",
@@ -24,6 +26,8 @@
       "uuid": "^8.3.2"
    },
    "scripts": {
-      "start": "nodemon"
+      "start": "nodemon",
+      "dump": "docker exec mongo sh -c 'exec mongodump -d social -o dump'",
+      "restore": "docker exec mongo sh -c 'exec mongorestore -d social --drop dump/social'"
    }
 }
